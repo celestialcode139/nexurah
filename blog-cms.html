@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Blog CMS | Optina</title>
+    <link rel="stylesheet" href="/css/blog-cms.css" />
+    <script src="/js/auth.js"></script>
+    <script>Auth.requireAuth();</script>
+  </head>
+  <body class="cms-body">
+    <div class="cms-wrapper">
+      <header class="cms-header">
+        <div class="cms-header-left">
+          <div class="cms-logo">O</div>
+          <div>
+            <div class="cms-header-title">Blog CMS</div>
+            <div class="cms-header-subtitle">Manage your blog posts dynamically</div>
+          </div>
+        </div>
+        <div class="cms-header-right">
+          <a href="/blog.html" class="cms-back-link" target="_blank" rel="noopener">View Blog</a>
+          <a href="/" class="cms-back-link">Back to Site</a>
+          <button id="cms-logout-btn" class="cms-btn" style="background-color: var(--card-border);">Logout</button>
+        </div>
+      </header>
+
+      <section class="cms-stats cms-animate-in" id="cms-stats">
+        <div class="cms-stat-card accent">
+          <div class="cms-stat-icon">&#128196;</div>
+          <div class="cms-stat-number" id="stat-total">0</div>
+          <div class="cms-stat-label">Total Posts</div>
+        </div>
+        <div class="cms-stat-card success">
+          <div class="cms-stat-icon">&#10003;</div>
+          <div class="cms-stat-number" id="stat-published">0</div>
+          <div class="cms-stat-label">Published</div>
+        </div>
+        <div class="cms-stat-card warning">
+          <div class="cms-stat-icon">&#9998;</div>
+          <div class="cms-stat-number" id="stat-draft">0</div>
+          <div class="cms-stat-label">Drafts</div>
+        </div>
+        <div class="cms-stat-card info">
+          <div class="cms-stat-icon">&#128193;</div>
+          <div class="cms-stat-number" id="stat-categories">0</div>
+          <div class="cms-stat-label">Categories</div>
+        </div>
+      </section>
+
+      <div class="cms-toolbar">
+        <div class="cms-toolbar-left">
+          <div class="cms-search-box">
+            <span class="cms-search-icon">&#128269;</span>
+            <input
+              type="search"
+              id="cms-search"
+              class="cms-search-input"
+              placeholder="Search posts by title, author, or category..."
+            />
+          </div>
+          <div class="cms-filter-pills" id="cms-filters">
+            <button type="button" class="cms-filter-pill active" data-filter="all">All</button>
+            <button type="button" class="cms-filter-pill" data-filter="published">Published</button>
+            <button type="button" class="cms-filter-pill" data-filter="draft">Drafts</button>
+          </div>
+        </div>
+        <div class="cms-toolbar-right">
+          <button type="button" class="cms-btn cms-btn-secondary" id="cms-export-btn">Export</button>
+          <button type="button" class="cms-btn cms-btn-primary" id="cms-new-post-btn">
+            + New Post
+          </button>
+        </div>
+      </div>
+
+      <section class="cms-posts-section">
+        <div class="cms-posts-header">
+          <div class="cms-posts-header-title">All Posts</div>
+          <div class="cms-posts-count" id="cms-posts-count">0 posts</div>
+        </div>
+        <div class="cms-posts-table" id="cms-posts-table">
+          <div class="cms-post-row header">
+            <div>Image</div>
+            <div>Title</div>
+            <div class="cms-post-category-col">Category</div>
+            <div class="cms-post-date-col">Date</div>
+            <div>Status</div>
+            <div>Actions</div>
+          </div>
+          <div id="cms-posts-body"></div>
+        </div>
+        <div class="cms-empty-state" id="cms-empty-state" hidden>
+          <div class="cms-empty-icon">&#128221;</div>
+          <div class="cms-empty-title">No posts yet</div>
+          <div class="cms-empty-text">Create your first blog post to get started.</div>
+          <button type="button" class="cms-btn cms-btn-primary" id="cms-empty-new-btn">+ Create Post</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- Post Editor Modal -->
+    <div class="cms-modal-overlay" id="editor-modal">
+      <div class="cms-modal" role="dialog" aria-labelledby="editor-modal-title">
+        <div class="cms-modal-header">
+          <h2 class="cms-modal-title" id="editor-modal-title">New Post</h2>
+          <button type="button" class="cms-modal-close" id="editor-modal-close" aria-label="Close">&times;</button>
+        </div>
+        <div class="cms-modal-body">
+          <form id="post-form" class="cms-form-grid">
+            <input type="hidden" id="post-id" />
+
+            <div class="cms-form-group full-width">
+              <label class="cms-form-label" for="post-title">Title</label>
+              <input type="text" id="post-title" class="cms-form-input" placeholder="Enter post title" required />
+            </div>
+
+            <div class="cms-form-group full-width">
+              <label class="cms-form-label" for="post-excerpt">Excerpt</label>
+              <textarea id="post-excerpt" class="cms-form-input cms-form-textarea" placeholder="Short summary of the post..." style="min-height: 80px;"></textarea>
+            </div>
+
+            <div class="cms-form-group">
+              <label class="cms-form-label" for="post-meta-title">Meta Title</label>
+              <input type="text" id="post-meta-title" class="cms-form-input" placeholder="SEO Title (optional)" />
+            </div>
+
+            <div class="cms-form-group">
+              <label class="cms-form-label" for="post-meta-description">Meta Description</label>
+              <textarea id="post-meta-description" class="cms-form-input cms-form-textarea" placeholder="SEO Description (optional)" style="min-height: 80px;"></textarea>
+            </div>
+
+            <div class="cms-form-group">
+              <label class="cms-form-label" for="post-slug">Slug</label>
+              <input type="text" id="post-slug" class="cms-form-input" placeholder="auto-generated-from-title" />
+            </div>
+
+            <div class="cms-form-group">
+              <label class="cms-form-label" for="post-status">Status</label>
+              <div class="cms-status-toggle" id="post-status-toggle">
+                <button type="button" class="cms-status-option active" data-status="draft">Draft</button>
+                <button type="button" class="cms-status-option" data-status="published">Published</button>
+              </div>
+            </div>
+
+            <div class="cms-form-group">
+              <label class="cms-form-label" for="post-author">Author</label>
+              <input type="text" id="post-author" class="cms-form-input" placeholder="Author name" value="Admin" />
+            </div>
+
+            <div class="cms-form-group">
+              <label class="cms-form-label" for="post-author-role">Author Role</label>
+              <input type="text" id="post-author-role" class="cms-form-input" placeholder="e.g. Business Analyst" value="Writer" />
+            </div>
+
+            <div class="cms-form-group">
+              <label class="cms-form-label" for="post-category">Category</label>
+              <input type="text" id="post-category" class="cms-form-input" placeholder="e.g. Business Strategy" list="category-suggestions" />
+              <datalist id="category-suggestions"></datalist>
+            </div>
+
+            <div class="cms-form-group">
+              <label class="cms-form-label" for="post-date">Publish Date</label>
+              <input type="date" id="post-date" class="cms-form-input" />
+            </div>
+
+            <div class="cms-form-group">
+              <label class="cms-form-label" for="post-read-time">Read Time</label>
+              <input type="text" id="post-read-time" class="cms-form-input" placeholder="5 min read" value="5 min read" />
+            </div>
+
+            <div class="cms-form-group">
+              <label class="cms-form-label" for="post-author-image">Author Image URL</label>
+              <div style="display: flex; gap: 8px; flex-direction: column;">
+                <input type="url" id="post-author-image" class="cms-form-input" placeholder="https://..." />
+                <input type="file" id="post-author-image-file" class="cms-form-input" accept="image/*" style="padding: 6px;" />
+              </div>
+            </div>
+
+            <div class="cms-form-group full-width">
+              <label class="cms-form-label" for="post-thumbnail">Thumbnail Image URL</label>
+              <div style="display: flex; gap: 8px; flex-direction: column;">
+                <input type="url" id="post-thumbnail" class="cms-form-input" placeholder="https://..." />
+                <input type="file" id="post-thumbnail-file" class="cms-form-input" accept="image/*" style="padding: 6px;" />
+              </div>
+              <div class="cms-thumb-preview" id="thumb-preview">
+                <div class="cms-thumb-placeholder">
+                  <div class="cms-thumb-placeholder-icon">&#128247;</div>
+                  <div class="cms-thumb-placeholder-text">Paste image URL or upload file to preview</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="cms-form-group full-width">
+              <label class="cms-form-label" for="post-hero-image">Hero Image URL</label>
+              <div style="display: flex; gap: 8px; flex-direction: column;">
+                <input type="url" id="post-hero-image" class="cms-form-input" placeholder="Leave empty to use thumbnail" />
+                <input type="file" id="post-hero-image-file" class="cms-form-input" accept="image/*" style="padding: 6px;" />
+              </div>
+            </div>
+
+            <div class="cms-form-group full-width">
+              <label class="cms-form-label">Content</label>
+              <div class="cms-editor-wrapper">
+                <div class="cms-editor-toolbar" id="editor-toolbar">
+                  <button type="button" class="cms-editor-btn" data-cmd="bold" title="Bold"><b>B</b></button>
+                  <button type="button" class="cms-editor-btn" data-cmd="italic" title="Italic"><i>I</i></button>
+                  <button type="button" class="cms-editor-btn" data-cmd="underline" title="Underline"><u>U</u></button>
+                  <div class="cms-editor-toolbar-divider"></div>
+                  <button type="button" class="cms-editor-btn" data-cmd="formatBlock" data-value="h2" title="Heading 2">H2</button>
+                  <button type="button" class="cms-editor-btn" data-cmd="formatBlock" data-value="h3" title="Heading 3">H3</button>
+                  <div class="cms-editor-toolbar-divider"></div>
+                  <button type="button" class="cms-editor-btn" data-cmd="insertUnorderedList" title="Bullet List">&#8226;</button>
+                  <button type="button" class="cms-editor-btn" data-cmd="insertOrderedList" title="Numbered List">1.</button>
+                  <div class="cms-editor-toolbar-divider"></div>
+                  <button type="button" class="cms-editor-btn" data-cmd="createLink" title="Link">&#128279;</button>
+                  <button type="button" class="cms-editor-btn" data-cmd="formatBlock" data-value="blockquote" title="Quote">&ldquo;</button>
+                </div>
+                <div class="cms-editor-content" id="post-content" contenteditable="true" data-placeholder="Write your blog content here..."></div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="cms-modal-footer">
+          <button type="button" class="cms-btn cms-btn-secondary" id="editor-cancel-btn">Cancel</button>
+          <button type="button" class="cms-btn cms-btn-primary" id="editor-save-btn">Save Post</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="cms-modal-overlay cms-delete-modal" id="delete-modal">
+      <div class="cms-modal" role="dialog">
+        <div class="cms-modal-body" style="padding-top: 32px">
+          <div class="cms-delete-icon">&#128465;</div>
+          <div class="cms-delete-title">Delete this post?</div>
+          <p class="cms-delete-text">
+            This will permanently delete
+            <span class="cms-delete-post-name" id="delete-post-name">this post</span>.
+            This action cannot be undone.
+          </p>
+        </div>
+        <div class="cms-modal-footer" style="justify-content: center">
+          <button type="button" class="cms-btn cms-btn-secondary" id="delete-cancel-btn">Cancel</button>
+          <button type="button" class="cms-btn cms-btn-danger" id="delete-confirm-btn">Delete Post</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="cms-toast-container" id="toast-container"></div>
+
+    <script src="/js/blog-data.js"></script>
+    <script src="/js/blog-cms.js"></script>
+  </body>
+</html>
