@@ -1,0 +1,19 @@
+# Nexurah
+
+> Nexurah is a business consulting firm that helps companies accelerate growth through expert guidance in strategy, financial planning, digital transformation, marketing, and risk & compliance management.
+
+## Key pages
+- [Home](https://www.nexurah.com/): Overview of Nexurah's consulting services and approach to business growth.
+- [About](https://www.nexurah.com/about.html): Who we are, our story, and our team.
+- [Services](https://www.nexurah.com/services.html): Full list of consulting services.
+- [Case Studies](https://www.nexurah.com/case-study.html): Real client results and engagements.
+- [Blog](https://www.nexurah.com/blog.html): Articles and insights on business growth.
+- [FAQ](https://www.nexurah.com/faq.html): Common questions about working with Nexurah.
+- [Contact](https://www.nexurah.com/contact.html): How to reach us.
+
+## Services
+- [Strategic Growth Planning](https://www.nexurah.com/services/strategic-growth-planning)
+- [Financial Strategy & Insights](https://www.nexurah.com/services/financial-strategy-insights)
+- [Digital Transformation](https://www.nexurah.com/services/digital-transformation)
+- [Marketing & Brand Consulting](https://www.nexurah.com/services/marketing-brand-consulting)
+- [Risk & Compliance Management](https://www.nexurah.com/services/risk-compliance-management)

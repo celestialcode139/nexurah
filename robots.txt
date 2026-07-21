@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Disallow: /login.html
+Disallow: /style-guide.html
+Disallow: /license.html
+
+Sitemap: https://www.nexurah.com/sitemap.xml
