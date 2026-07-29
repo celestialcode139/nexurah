@@ -3058,6 +3058,8 @@ label {
   align-items: center;
   width: 100%;
   display: flex;
+  padding-top: 12px;
+  padding-bottom: 12px;
 }
 
 .text-box-button {
@@ -5252,7 +5254,7 @@ label {
   grid-column-gap: var(--_spacing---spacing--space-regular);
   grid-row-gap: var(--_spacing---spacing--space-regular);
   justify-content: space-between;
-  display: flex;
+  display: block;
 }
 
 .faq-left {
@@ -5262,7 +5264,6 @@ label {
 
 .faq-right {
   width: 100%;
-  max-width: 945px;
 }
 
 .faq-left-block {
