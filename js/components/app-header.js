@@ -34,7 +34,7 @@ class AppHeader extends HTMLElement {
                   </div>
                 </div>
                 <div class="header-button">
-                  <a href="/contact.html" class="primary-button w-inline-block">
+                  <a href="https://calendly.com/hello-nexurah/30min" class="primary-button w-inline-block">
                     <div class="text-box-button">
                       <div class="front-text-button">Book Consultation</div>
                       <div class="back-text-button">Book Consultation</div>

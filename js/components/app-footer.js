@@ -12,7 +12,7 @@ class AppFooter extends HTMLElement {
                 <div class="footer-button">
                   <a
                     data-w-id="0e6a5b3a-5f48-a002-fad2-6f17aea5003e"
-                    href="/contact.html"
+                    href="https://calendly.com/hello-nexurah/30min"
                     class="primary-button two w-inline-block"
                   >
                     <div class="text-box-button">
